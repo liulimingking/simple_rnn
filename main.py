@@ -14,7 +14,7 @@ batch_size = 32
 
 # 加载数据集
 print("正在加载数据...")
-(x_train, y_train), (x_test, y_test) = imdb.load_data(num_words=max_features)
+(x_train, y_train), (x_test, y_test) = imdb.load_data(num_words=max_features)#keras里面已经是“嵌入数字”的版本 原始在
 print(f"训练序列数量: {len(x_train)}")
 print(f"测试序列数量: {len(x_test)}")
 
@@ -24,16 +24,18 @@ print("正在填充序列（将样本处理成相同长度）...")
 x_train = pad_sequences(x_train, maxlen=maxlen)
 x_test = pad_sequences(x_test, maxlen=maxlen)
 print(f"x_train 的形状: {x_train.shape}")
-print (x_train[0])
+print(f"x_train[0]是: {x_train[0]}")
 print(f"x_test 的形状: {x_test.shape}")
 
 
 # 3. 构建简单的 RNN 模型
-model = Sequential()
 
 # 嵌入层 (Embedding Layer)
 # 将正整数（单词索引）转换为固定大小的密集向量
 # 10000: 词汇表大小, 32: 嵌入向量的维度
+#经过嵌入向量变成(25000, 500, 32) 原来是500 个由数字组成的序列，现在变成了 500 个 32 维向量的序列。模型现在处理的不再是数字列表，而是包含丰富语义信息的向量矩阵。
+
+model = Sequential()
 model.add(Embedding(max_features, 32))
 
 # SimpleRNN 层
