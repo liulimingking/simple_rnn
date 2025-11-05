@@ -24,6 +24,7 @@ print("正在填充序列（将样本处理成相同长度）...")
 x_train = pad_sequences(x_train, maxlen=maxlen)
 x_test = pad_sequences(x_test, maxlen=maxlen)
 print(f"x_train 的形状: {x_train.shape}")
+print (x_train[0])
 print(f"x_test 的形状: {x_test.shape}")
 
 
@@ -37,12 +38,12 @@ model.add(Embedding(max_features, 32))
 
 # SimpleRNN 层
 # 32: 输出空间的维度（隐藏单元的数量）
-model.add(SimpleRNN(32))
+model.add(SimpleRNN(10))
 
 # 输出层 (Dense Layer)
 # 1: 输出一个单一的数值
 # 'sigmoid': 激活函数，将输出压缩到 0-1 之间，非常适合二分类问题
-model.add(Dense(1, activation='sigmoid'))
+model.add(Dense(1, activation='relu'))
 
 
 # 4. 编译模型
@@ -57,7 +58,7 @@ model.summary()
 # 5. 训练模型
 print("正在训练模型...")
 history = model.fit(x_train, y_train,
-                    epochs=10,
+                    epochs=5,
                     batch_size=128,
                     validation_split=0.2) # 在训练过程中使用20%的数据进行验证
 
